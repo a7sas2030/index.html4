@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>حساب الأرباح</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- زر الوضع الليلي -->
+    <div class="theme-switch-wrapper">
+        <label class="theme-switch" for="checkbox">
+            <input type="checkbox" id="checkbox" />
+            <div class="slider round">
+                <i class="fas fa-sun"></i>
+                <i class="fas fa-moon"></i>
+            </div>
+        </label>
+    </div>
+
+    <div class="container mt-5">
+        <!-- أزرار التبديل بين النموذجين -->
+        <div class="row mb-4">
+            <div class="col-12 text-center">
+                <div class="btn-group" role="group">
+                    <button type="button" class="btn btn-primary active" id="saudiBtn">الأسهم السعودية</button>
+                    <button type="button" class="btn btn-primary" id="usBtn">الأسهم الأمريكية</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- نموذج الأسهم السعودية -->
+        <div class="card shadow mb-4" id="saudiForm">
+            <div class="card-header bg-primary text-white">
+                <h2 class="text-center mb-0">حساب أرباح الأسهم السعودية</h2>
+            </div>
+            <div class="card-body">
+                <form id="profitFormSaudi">
+                    <div class="row mb-4">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="daySaudi">اليوم:</label>
+                                <select class="form-select" id="daySaudi" required>
+                                    <option value="" disabled selected>اختر اليوم</option>
+                                    <option value="الأحد">الأحد</option>
+                                    <option value="الاثنين">الاثنين</option>
+                                    <option value="الثلاثاء">الثلاثاء</option>
+                                    <option value="الأربعاء">الأربعاء</option>
+                                    <option value="الخميس">الخميس</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="dateSaudi">التاريخ:</label>
+                                <input type="date" class="form-control" id="dateSaudi" required>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="stockNameSaudi">اسم السهم:</label>
+                                <input type="text" class="form-control" id="stockNameSaudi" required>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="profitSaudi">الأرباح (ريال):</label>
+                                <input type="number" class="form-control" id="profitSaudi" step="0.01" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-center mb-4">
+                        <button type="submit" class="btn btn-primary mx-2">إضافة</button>
+                        <button type="button" class="btn btn-success mx-2" id="calculateTotalSaudi">حساب الجمع</button>
+                        <button type="button" class="btn btn-danger mx-2" id="clearTableSaudi">مسح الجدول</button>
+                    </div>
+                </form>
+
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered">
+                        <thead class="table-primary">
+                            <tr>
+                                <th>التاريخ</th>
+                                <th>اليوم</th>
+                                <th>اسم السهم</th>
+                                <th>الأرباح</th>
+                                <th>المجموع التراكمي</th>
+                            </tr>
+                        </thead>
+                        <tbody id="profitTableBodySaudi">
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="4" class="text-start"><strong>المجموع الكلي:</strong></td>
+                                <td id="totalSumSaudi">0</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- نموذج الأسهم الأمريكية -->
+        <div class="card shadow mb-4" id="usForm" style="display: none;">
+            <div class="card-header bg-primary text-white">
+                <h2 class="text-center mb-0">حساب أرباح الأسهم الأمريكية</h2>
+            </div>
+            <div class="card-body">
+                <form id="profitFormUS">
+                    <div class="row mb-4">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="dayUS">اليوم:</label>
+                                <select class="form-select" id="dayUS" required>
+                                    <option value="" disabled selected>اختر اليوم</option>
+                                    <option value="Monday">Monday</option>
+                                    <option value="Tuesday">Tuesday</option>
+                                    <option value="Wednesday">Wednesday</option>
+                                    <option value="Thursday">Thursday</option>
+                                    <option value="Friday">Friday</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="dateUS">التاريخ:</label>
+                                <input type="date" class="form-control" id="dateUS" required>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="stockNameUS">Stock Symbol:</label>
+                                <input type="text" class="form-control" id="stockNameUS" required>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="profitUS">Profit (USD):</label>
+                                <input type="number" class="form-control" id="profitUS" step="0.01" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-center mb-4">
+                        <button type="submit" class="btn btn-primary mx-2">Add</button>
+                        <button type="button" class="btn btn-success mx-2" id="calculateTotalUS">Calculate Total</button>
+                        <button type="button" class="btn btn-danger mx-2" id="clearTableUS">Clear Table</button>
+                    </div>
+                </form>
+
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered">
+                        <thead class="table-primary">
+                            <tr>
+                                <th>Date</th>
+                                <th>Day</th>
+                                <th>Stock Symbol</th>
+                                <th>Profit</th>
+                                <th>Running Total</th>
+                            </tr>
+                        </thead>
+                        <tbody id="profitTableBodyUS">
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="4" class="text-start"><strong>Total:</strong></td>
+                                <td id="totalSumUS">$0</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mt-5">
+        <h2 class="text-center mb-4">ماهي الأسهم</h2>
+        <p class="text-center">
+            <a href="https://a7sas2030.github.io/index.html3/" class="btn btn-primary">تعرف على المزيد عن الأسهم</a>
+        </p>
+    </div>
+
+    <footer class="footer mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <h3 class="footer-brand mb-4">حساب الأرباح</h3>
+                    <p class="footer-desc">تطبيق احترافي لإدارة وتتبع الأرباح اليومية</p>
+                    <div class="social-links mb-4">
+                        <a href="#" class="mx-2"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="mx-2"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="mx-2"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="mx-2"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                    <div class="footer-copyright">
+                        <p>جميع الحقوق محفوظة &copy; <span id="year"></span></p>
+                        <p class="footer-made">بواسطة مطور التطبيقات عبدالله هزازي <i class="fas fa-heart text-danger"></i></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
